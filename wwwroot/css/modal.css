@@ -1,0 +1,75 @@
+﻿.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.custom-modal {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    z-index: 10000;
+    position: relative;
+}
+
+.custom-modal h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+    .custom-modal input {
+        width: 100%;
+        padding: 0.5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+    }
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+    .modal-buttons button {
+        flex: 1;
+        margin: 0 0.5rem;
+        padding: 0.6rem;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        transition: background-color 0.3s;
+    }
+
+        .modal-buttons button:hover {
+            background-color: #0056b3;
+        }
+
+.custom-modal button[type="button"] {
+    margin-top: 1rem;
+    padding: 0.5rem;
+    background-color: transparent;
+    color: #666;
+    border: none;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}

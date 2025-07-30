@@ -1,6 +1,7 @@
-using System.Diagnostics;
 using Birthday_tracker.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Text.Encodings.Web;
 
 namespace Birthday_tracker.Controllers
 {
@@ -11,6 +12,11 @@ namespace Birthday_tracker.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+        }
+
+        public string Welcome(string name, int numTimes = 1)
+        {
+            return HtmlEncoder.Default.Encode($"Hello {name}, NumTimes is: {numTimes}");
         }
 
         public IActionResult Index()
