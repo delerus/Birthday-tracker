@@ -1,6 +1,21 @@
-﻿namespace Birthday_tracker.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Birthday_tracker.Models
 {
     public class Birthday
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime BirthdayDate { get; set; }
+
     }
 }
