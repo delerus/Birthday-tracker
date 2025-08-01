@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Birthday_tracker.Data;
 
 namespace Birthday_tracker.Models
 {
@@ -17,5 +18,7 @@ namespace Birthday_tracker.Models
         [DataType(DataType.Date)]
         public DateTime BirthdayDate { get; set; }
 
+        [StringLength(255)]
+        public string? Image { get; set; }
     }
 }
