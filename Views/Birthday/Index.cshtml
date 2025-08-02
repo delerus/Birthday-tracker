@@ -1,4 +1,35 @@
-﻿@{
+﻿@model List<Birthday>
+@{
     ViewData["Title"] = "Birthdays list";
 }
 
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/birthday.css" />
+}
+
+<h2>Birthdays DB</h2>
+
+<table class="birthday-list">
+<head>
+<tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Birthday</th>
+    <th>Image</th>
+</tr>
+</head>
+
+<tbody>
+
+@foreach (var birthday in Model)
+{
+    <tr>
+        <td>@birthday.Id</td>
+        <td>@birthday.Name</td>
+        <td>@birthday.BirthdayDate.ToShortDateString()</td>
+        <td><img src="/images/@birthday.Image" alt="@birthday.Name" /></td>
+    </tr>
+}
+</tbody>
+</table>

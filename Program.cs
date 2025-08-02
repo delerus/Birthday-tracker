@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Birthday_tracker.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<ApplicationDbContext>();
 
 var app = builder.Build();
 
