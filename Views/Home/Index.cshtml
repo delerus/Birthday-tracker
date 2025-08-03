@@ -1,50 +1,71 @@
 ﻿@model NearBirthdaysViewModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Upcoming Birthdays";
 }
 
-<h2>Birthdays in the coming week</h2>
-<table class="birthday-list">
-    <head>
-    <tr>
-        <th>Name</th>
-        <th>Birthday</th>
-        <th>Image</th>
-    </tr>
-    </head>
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/home.css" />
+}
 
-    <tbody>
+<div class="birthdays-container">
+    <div class="upcoming-birthdays">
+        <h2>Nearest birthdays</h2>
+        <div class="birthday-cards">
+            @foreach (var birthday in Model.UpcomingBirthdays)
+            {
+                <div class="birthday-card">
+                    <img src="/images/@birthday.Image" alt="@birthday.Name" class="avatar" />
+                    <div class="birthday-info">
+                        <h3>@birthday.Name</h3>
+                        <p class="birthday-message">
+                            @GetBirthdayMessage(birthday)
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 
-        @foreach (var birthday in Model.UpcomingBirthdays)
+    <div class="monthly-birthdays">
+        <h2>All birthdays in this Month</h2>
+        <div class="birthday-grid">
+            @foreach (var birthday in Model.MonthlyBirthdays)
+            {
+                <div class="birthday-card">
+                    <img src="/images/@birthday.Image" alt="@birthday.Name" class="avatar" />
+                    <div class="birthday-info">
+                        <h3>@birthday.Name</h3>
+                        <p class="birthday-date">
+                            @GetBirthdayMessage(birthday)
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@functions {
+    string GetBirthdayMessage(Birthday birthday)
+    {
+        var today = DateTime.Today;
+        var nextBirthday = birthday.BirthdayDate.AddYears(today.Year - birthday.BirthdayDate.Year);
+        if (nextBirthday < today) nextBirthday = nextBirthday.AddYears(1);
+
+        int daysLeft = (nextBirthday - today).Days;
+        int age = today.Year - birthday.BirthdayDate.Year;
+
+        if (daysLeft == 0)
         {
-            <tr>
-                <td>@birthday.Name</td>
-                <td>@birthday.BirthdayDate.ToShortDateString()</td>
-                <td><img src="/images/@birthday.Image" alt="@birthday.Name" /></td>
-            </tr>
+            return "🎉 Celebrates birthday TODAY!!! 🎉";
         }
-    </tbody>
-</table>
 
-<h2>Birthdays in this month</h2>
-<table class="birthday-list">
-    <head>
-    <tr>
-        <th>Name</th>
-        <th>Birthday</th>
-        <th>Image</th>
-    </tr>
-    </head>
-
-    <tbody>
-
-        @foreach (var birthday in Model.MonthlyBirthdays)
+        if (daysLeft == 1)
         {
-            <tr>
-                <td>@birthday.Name</td>
-                <td>@birthday.BirthdayDate.ToShortDateString()</td>
-                <td><img src="/images/@birthday.Image" alt="@birthday.Name" /></td>
-            </tr>
+            return $"Will turn {age} TOMORROW! ({birthday.BirthdayDate:d})";
         }
-    </tbody>
-</table>
+
+        return $"Will turn {age} in {daysLeft} days ({birthday.BirthdayDate:d.MM})";
+    }
+}
