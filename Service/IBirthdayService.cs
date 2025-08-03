@@ -6,7 +6,10 @@ namespace Birthday_tracker.Service
     {
         Task<List<Birthday>> GetFilteredAsync(DateTime date1, DateTime date2);
         Task<List<Birthday>> GetSortedAsync(string field);
+        Task<List<Birthday>> GetUpcomingBirthdaysAsync(int daysAhead = 30);
+        Task<List<Birthday>> GetBirthdaysInMonthAsync(int month);
         Task AddBirthdayAsync(Birthday b);
         Task DeleteBirthdayAsync(Birthday b);
+        Task<List<Birthday>> GetAllAsync();
     }
 }

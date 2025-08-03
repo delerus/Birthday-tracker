@@ -27,7 +27,7 @@ namespace Birthday_tracker.Service
 
             if (birthday != null)
             {
-                _repository.DeleteAsync(b);
+                await _repository.DeleteAsync(b);
             }
             else throw new Exception("Data couldn't be found");
 
@@ -48,6 +48,28 @@ namespace Birthday_tracker.Service
                 throw new ArgumentException("Invalid sorting field.");
 
             return _repository.GetSortedAsync(field);
+        }
+
+        public Task<List<Birthday>> GetAllAsync()
+        {
+            return _repository.GetAllAsync();
+        }
+
+        public Task<List<Birthday>> GetUpcomingBirthdaysAsync(int daysAhead = 7)
+        {
+            DateTime date1 = DateTime.Now;
+            DateTime date2 = date1.AddDays(daysAhead);
+            return _repository.GetFilteredByDateAsync(date1, date2);
+        }
+
+        public Task<List<Birthday>> GetBirthdaysInMonthAsync(int month)
+        {
+            if (month < 1 || month > 12)
+                throw new ArgumentException("Month must be between 1 and 12.");
+            DateTime date1 = new DateTime(DateTime.Now.Year, month, 1);
+            DateTime date2 = new DateTime(DateTime.Now.Year, month, DateTime.DaysInMonth(DateTime.Now.Year, month));
+
+            return _repository.GetFilteredByDateAsync(date1, date2);
         }
     }
 }

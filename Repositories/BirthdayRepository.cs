@@ -32,26 +32,40 @@ namespace Birthday_tracker.Repositories
 
         public async Task<List<Birthday>> GetFilteredByDateAsync(DateTime date1, DateTime date2)
         {
-            return await _context.Birthdays.Where(b => b.BirthdayDate >= date1 && b.BirthdayDate <= date2).ToListAsync();
+            var startDayOfYear = date1.DayOfYear;
+            var endDayOfYear = date2.DayOfYear;
+
+            if (startDayOfYear > endDayOfYear)
+            {   // If year flipping
+                return await _context.Birthdays
+                    .Where(b => 
+                        b.BirthdayDate.DayOfYear >= startDayOfYear || 
+                        b.BirthdayDate.DayOfYear <= endDayOfYear)
+                    .OrderBy(b => b.BirthdayDate)
+                    .ToListAsync();
+            }
+            else
+            {   // If birthdays in same year
+                return await _context.Birthdays
+                    .Where(b => 
+                        b.BirthdayDate.DayOfYear >= startDayOfYear && 
+                        b.BirthdayDate.DayOfYear <= endDayOfYear)
+                    .OrderBy(b => b.BirthdayDate)
+                    .ToListAsync();
+            }
         }
 
         public async Task<List<Birthday>> GetSortedAsync(string field)
         {
-            switch (field)
+            return field switch
             {
-                case "name":
-                    await _context.Birthdays.OrderBy(b => b.Name).ToListAsync(); break;
-                case "id":
-                    await _context.Birthdays.OrderBy(b => b.Id).ToListAsync(); break;
-                case "date":
-                default:
-                    await _context.Birthdays.OrderBy(b => b.BirthdayDate).ToListAsync(); break;
-            }
-
-            return await GetAllAsync();
+                "name" => await _context.Birthdays.OrderBy(b => b.Name).ToListAsync(),
+                "id" => await _context.Birthdays.OrderBy(b => b.Id).ToListAsync(),
+                _ => await _context.Birthdays.OrderBy(b => b.BirthdayDate).ToListAsync()
+            };
         }
 
-        Task<Birthday?> FindAsync(string name, DateTime date)
+        public Task<Birthday?> FindAsync(string name, DateTime date)
         {
             return _context.Birthdays.FirstOrDefaultAsync(p => p.Name == name && p.BirthdayDate == date);
         }
