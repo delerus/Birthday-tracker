@@ -1,4 +1,50 @@
-﻿@{
+﻿@model NearBirthdaysViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
+<h2>Birthdays in the coming week</h2>
+<table class="birthday-list">
+    <head>
+    <tr>
+        <th>Name</th>
+        <th>Birthday</th>
+        <th>Image</th>
+    </tr>
+    </head>
+
+    <tbody>
+
+        @foreach (var birthday in Model.UpcomingBirthdays)
+        {
+            <tr>
+                <td>@birthday.Name</td>
+                <td>@birthday.BirthdayDate.ToShortDateString()</td>
+                <td><img src="/images/@birthday.Image" alt="@birthday.Name" /></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Birthdays in this month</h2>
+<table class="birthday-list">
+    <head>
+    <tr>
+        <th>Name</th>
+        <th>Birthday</th>
+        <th>Image</th>
+    </tr>
+    </head>
+
+    <tbody>
+
+        @foreach (var birthday in Model.MonthlyBirthdays)
+        {
+            <tr>
+                <td>@birthday.Name</td>
+                <td>@birthday.BirthdayDate.ToShortDateString()</td>
+                <td><img src="/images/@birthday.Image" alt="@birthday.Name" /></td>
+            </tr>
+        }
+    </tbody>
+</table>

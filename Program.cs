@@ -1,11 +1,17 @@
-using Microsoft.EntityFrameworkCore;
 using Birthday_tracker.Data;
+using Birthday_tracker.Repositories;
+using Birthday_tracker.Service;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>();
+
+builder.Services.AddScoped<IBirthdayService, BirthdayService>();
+
+builder.Services.AddScoped<IBirthdayRepository, BirthdayRepository>();
 
 var app = builder.Build();
 
