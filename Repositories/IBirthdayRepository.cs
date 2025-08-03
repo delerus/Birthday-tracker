@@ -9,5 +9,6 @@ namespace Birthday_tracker.Repositories
         Task<List<Birthday>> GetFilteredByDateAsync(DateTime date1, DateTime date2);
         Task AddAsync(Birthday birthday);
         Task DeleteAsync(Birthday birthday);
+        Task<Birthday?> FindAsync(string name, DateTime date);
     }
 }

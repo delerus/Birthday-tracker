@@ -50,5 +50,10 @@ namespace Birthday_tracker.Repositories
 
             return await GetAllAsync();
         }
+
+        Task<Birthday?> FindAsync(string name, DateTime date)
+        {
+            return _context.Birthdays.FirstOrDefaultAsync(p => p.Name == name && p.BirthdayDate == date);
+        }
     }
 }
