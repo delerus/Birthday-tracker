@@ -30,8 +30,8 @@ namespace Birthday_tracker.Controllers
             Console.WriteLine(DateTime.Now.ToString());
             var model = new NearBirthdaysViewModel
             {
-                UpcomingBirthdays = await _service.GetUpcomingBirthdaysAsync(),
-                MonthlyBirthdays = await _service.GetBirthdaysInMonthAsync(DateTime.Now.Month)
+                TodayBirthdays = await _service.GetUpcomingBirthdaysAsync(1),
+                UpcomingBirthdays = await _service.GetUpcomingBirthdaysAsync(7)
             };
 
             return View(model);

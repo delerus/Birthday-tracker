@@ -2,7 +2,7 @@
 {
     public class NearBirthdaysViewModel
     {
+        public IEnumerable<Birthday> TodayBirthdays { get; set; }
         public IEnumerable<Birthday> UpcomingBirthdays { get; set; }
-        public IEnumerable<Birthday> MonthlyBirthdays { get; set; }
     }
 }

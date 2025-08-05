@@ -9,10 +9,10 @@
 }
 
 <div class="birthdays-container">
-    <div class="upcoming-birthdays">
-        <h2>Nearest birthdays</h2>
+    <div class="today-birthdays">
+        <h2>Today birthdays</h2>
         <div class="birthday-cards">
-            @foreach (var birthday in Model.UpcomingBirthdays)
+            @foreach (var birthday in Model.TodayBirthdays)
             {
                 <div class="birthday-card">
                     <img src="/images/@birthday.Image" alt="@birthday.Name" class="avatar" />
@@ -27,10 +27,10 @@
         </div>
     </div>
 
-    <div class="monthly-birthdays">
-        <h2>All birthdays in this Month</h2>
+    <div class="near-birthdays">
+        <h2>Upcoming birthdays in one week</h2>
         <div class="birthday-grid">
-            @foreach (var birthday in Model.MonthlyBirthdays)
+            @foreach (var birthday in Model.UpcomingBirthdays)
             {
                 <div class="birthday-card">
                     <img src="/images/@birthday.Image" alt="@birthday.Name" class="avatar" />
@@ -58,7 +58,7 @@
 
         if (daysLeft == 0)
         {
-            return "🎉 Celebrates birthday TODAY!!! 🎉";
+            return "🎉Celebrates birthday TODAY!🎉";
         }
 
         if (daysLeft == 1)
