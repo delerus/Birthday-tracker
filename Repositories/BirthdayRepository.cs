@@ -33,27 +33,28 @@ namespace Birthday_tracker.Repositories
 
         public async Task<List<Birthday>> GetFilteredByDateAsync(DateTime date1, DateTime date2)
         {
-            var startDayOfYear = date1.DayOfYear;
-            var endDayOfYear = date2.DayOfYear;
+            date1 = date1.Date;
+            date2 = date2.Date;
 
-            if (startDayOfYear > endDayOfYear)
-            {   // If year flipping
-                return await _context.Birthdays
-                    .Where(b => 
-                        b.BirthdayDate.DayOfYear >= startDayOfYear || 
-                        b.BirthdayDate.DayOfYear <= endDayOfYear)
-                    .OrderBy(b => b.BirthdayDate)
-                    .ToListAsync();
+            var result = new List<Birthday>();
+            var birthdays = await _context.Birthdays.ToListAsync();
+
+            foreach (var birthday in birthdays)
+            {
+                var birthDay = birthday.BirthdayDate.Day;
+                var birthMonth = birthday.BirthdayDate.Month;
+
+                var thisYearBirthday = new DateTime(date1.Year, birthMonth, birthDay);
+                var nextYearBirthday = new DateTime(date1.Year + 1, birthMonth, birthDay);
+
+                if ((thisYearBirthday >= date1 && thisYearBirthday <= date2) ||
+                    (nextYearBirthday >= date1 && nextYearBirthday <= date2))
+                {
+                    result.Add(birthday);
+                }
             }
-            else
-            {   // If birthdays in same year
-                return await _context.Birthdays
-                    .Where(b => 
-                        b.BirthdayDate.DayOfYear >= startDayOfYear && 
-                        b.BirthdayDate.DayOfYear <= endDayOfYear)
-                    .OrderBy(b => b.BirthdayDate)
-                    .ToListAsync();
-            }
+
+            return result.OrderBy(b => (b.BirthdayDate.Month, b.BirthdayDate.Day)).ToList();
         }
 
         public async Task<List<Birthday>> GetSortedAsync(string field)
