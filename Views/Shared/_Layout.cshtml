@@ -28,7 +28,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Birthday" asp-action="Index">All birthdays</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="#" onclick="openModal()">Add/Delete</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Birthday" asp-action="Create">Add</a>
                         </li>
                     </ul>
                 </div>
@@ -41,25 +41,9 @@
         </main>
     </div>
 
-    <div id="modal" class="modal-overlay hidden">
-        <div class="custom-modal">
-            <form id="mainForm" method="post">
-                <h2>Add / Delete Birthday</h2>
-                <input name="Name" placeholder="Name" required />
-                <input type="date" name="DateOfBirth" required />
-                <div class="modal-buttons">
-                    <button type="submit" formaction="/Birthday/Create">Add</button>
-                    <button type="submit" formaction="/Birthday/Delete">Delete</button>
-                </div>
-            </form>
-            <button type="button" onclick="closeModal()">Cancel</button>
-        </div>
-    </div>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/modal.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

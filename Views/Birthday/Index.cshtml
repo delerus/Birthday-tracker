@@ -38,3 +38,21 @@
 }
 </tbody>
 </table>
+
+<div id="editModal" class="modal-overlay hidden">
+    <div class="custom-modal">
+        <form id="editForm" method="post" asp-action="Update" asp-controller="Birthday">
+            <h2>Update Birthday</h2>
+
+            <input type="hidden" name="Id" id="editId" />
+            <input name="Name" id="editName" placeholder="Name" required />
+            <input type="date" name="BirthdayDate" id="editDate" required />
+            <input type="file" name="ImageFile" id="editImageFile" accept="image/*" />
+
+            <div class="modal-buttons">
+                <button type="submit">Save</button>
+                <button type="button" onclick="closeEditModal()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

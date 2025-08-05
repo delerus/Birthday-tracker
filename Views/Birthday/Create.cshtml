@@ -1,0 +1,29 @@
+﻿@model BirthdayDto
+@{
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/birthdayForm.css" />
+}
+
+<form asp-action="Create" asp-controller="Birthday" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="BirthdayDate"></label>
+        <input asp-for="BirthdayDate" class="form-control" type="date" />
+        <span asp-validation-for="BirthdayDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ImageFile">Upload Image</label>
+        <input asp-for="ImageFile" class="form-control" type="file" accept="image/*" />
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+    </div>
+    <button type="submit">Add</button>
+</form>

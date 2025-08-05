@@ -1,7 +1,6 @@
 ﻿using Birthday_tracker.Data;
 using Birthday_tracker.Models;
 using Birthday_tracker.Repositories;
-
 using Microsoft.EntityFrameworkCore;
 
 
@@ -31,6 +30,11 @@ namespace Birthday_tracker.Service
             }
             else throw new Exception("Data couldn't be found");
 
+        }
+
+        public async Task<Birthday?> FindAsync(int id)
+        {
+            return await _repository.FindAsync(id);
         }
 
         public Task UpdateBirthdayAsync(int id)
@@ -77,5 +81,37 @@ namespace Birthday_tracker.Service
             return _repository.GetFilteredByDateAsync(date1, date2);
         }
 
+        public async Task AddBirthdayAsync(BirthdayDto dto)
+        {
+            string imageName = "default.jpg";
+
+            if (dto.ImageFile != null && dto.ImageFile.Length > 0)
+            {
+                var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(dto.ImageFile.FileName);
+                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", uniqueFileName);
+
+                while (System.IO.File.Exists(imagePath))
+                {
+                    uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(dto.ImageFile.FileName);
+                    imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", uniqueFileName);
+                }
+
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    await dto.ImageFile.CopyToAsync(stream);
+                }
+
+                imageName = uniqueFileName;
+            }
+
+            var birthday = new Birthday
+            {
+                Name = dto.Name,
+                BirthdayDate = dto.BirthdayDate,
+                Image = imageName
+            };
+
+            await _repository.AddAsync(birthday);
+        }
     }
 }

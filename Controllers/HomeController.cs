@@ -26,6 +26,8 @@ namespace Birthday_tracker.Controllers
 
         public async Task<IActionResult> Index()
         {
+
+            Console.WriteLine(DateTime.Now.ToString());
             var model = new NearBirthdaysViewModel
             {
                 UpcomingBirthdays = await _service.GetUpcomingBirthdaysAsync(),
