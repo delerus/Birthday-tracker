@@ -7,18 +7,17 @@ namespace Birthday_tracker.Controllers
 {
     public class BirthdayController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IBirthdayService _service;
 
-        public BirthdayController(ApplicationDbContext context)
+        public BirthdayController(IBirthdayService service)
         {
-            _context = context;
+            _service = service;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string sortField = "id")
         {
-            var birthdays = _context.Birthdays.ToList();
-            return View(birthdays);
+            var sorted = await _service.GetSortedAsync(sortField.ToLower());
+            return View(sorted);
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Birthday_tracker.Service
 
         public Task<List<Birthday>> GetSortedAsync(string field)
         {
-            var allowedFields = new[] { "Name", "BirthdayDate" };
+            var allowedFields = new[] { "name", "id", "date" };
             if (!allowedFields.Contains(field))
                 throw new ArgumentException("Invalid sorting field.");
 
