@@ -9,7 +9,8 @@ namespace Birthday_tracker.Service
         Task<List<Birthday>> GetUpcomingBirthdaysAsync(int daysAhead = 30);
         Task<List<Birthday>> GetBirthdaysInMonthAsync(int month);
         Task AddBirthdayAsync(Birthday b);
-        Task DeleteBirthdayAsync(Birthday b);
+        Task DeleteBirthdayAsync(int id);
+        Task UpdateBirthdayAsync(int id);
         Task<List<Birthday>> GetAllAsync();
     }
 }

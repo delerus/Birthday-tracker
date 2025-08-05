@@ -21,16 +21,21 @@ namespace Birthday_tracker.Service
             return _repository.AddAsync(b);
         }
 
-        public async Task DeleteBirthdayAsync(Birthday b)
+        public async Task DeleteBirthdayAsync(int id)
         {
-            Birthday birthday = await _repository.FindAsync(b.Name, b.BirthdayDate);
+            Birthday birthday = await _repository.FindAsync(id);
 
             if (birthday != null)
             {
-                await _repository.DeleteAsync(b);
+                await _repository.DeleteAsync(birthday);
             }
             else throw new Exception("Data couldn't be found");
 
+        }
+
+        public Task UpdateBirthdayAsync(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<List<Birthday>> GetFilteredAsync(DateTime date1, DateTime date2)
@@ -71,5 +76,6 @@ namespace Birthday_tracker.Service
 
             return _repository.GetFilteredByDateAsync(date1, date2);
         }
+
     }
 }

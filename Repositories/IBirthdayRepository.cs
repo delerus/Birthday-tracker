@@ -10,5 +10,6 @@ namespace Birthday_tracker.Repositories
         Task AddAsync(Birthday birthday);
         Task DeleteAsync(Birthday birthday);
         Task<Birthday?> FindAsync(string name, DateTime date);
+        Task<Birthday?> FindAsync(int id);
     }
 }

@@ -1,6 +1,7 @@
-﻿using Birthday_tracker.Models;
-using Birthday_tracker.Data;
+﻿using Birthday_tracker.Data;
+using Birthday_tracker.Models;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Birthday_tracker.Repositories
 {
@@ -67,7 +68,12 @@ namespace Birthday_tracker.Repositories
 
         public Task<Birthday?> FindAsync(string name, DateTime date)
         {
-            return _context.Birthdays.FirstOrDefaultAsync(p => p.Name == name && p.BirthdayDate == date);
+            return _context.Birthdays.FirstOrDefaultAsync(b => b.Name == name && b.BirthdayDate == date);
+        }
+
+        public Task<Birthday?> FindAsync(int id)
+        {
+            return _context.Birthdays.FirstOrDefaultAsync(b => b.Id == id);
         }
     }
 }

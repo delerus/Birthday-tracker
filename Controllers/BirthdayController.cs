@@ -19,5 +19,18 @@ namespace Birthday_tracker.Controllers
             var sorted = await _service.GetSortedAsync(sortField.ToLower());
             return View(sorted);
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _service.DeleteBirthdayAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

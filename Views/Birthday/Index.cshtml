@@ -17,6 +17,7 @@
         <th><a asp-action="Index" asp-route-sortField="name">Name</a></th>
         <th><a asp-action="Index" asp-route-sortField="date">Birthday</a></th>
     <th>Image</th>
+    <th>Action</th>
 </tr>
 </head>
 
@@ -29,6 +30,10 @@
         <td>@birthday.Name</td>
         <td>@birthday.BirthdayDate.ToShortDateString()</td>
         <td><img src="/images/@birthday.Image" alt="@birthday.Name" /></td>
+        <td>
+            <a class="btn btn-primary btn-sm" asp-controller="Birthday" asp-action="Edit" asp-route-id="@birthday.Id">Edit</a>
+            <a class="btn btn-danger btn-sm" asp-controller="Birthday" asp-action="Delete" asp-route-id="@birthday.Id">Delete</a>
+        </td>
     </tr>
 }
 </tbody>
