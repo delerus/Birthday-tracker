@@ -1,5 +1,6 @@
 ﻿using Birthday_tracker.Data;
 using Birthday_tracker.Models;
+using Birthday_tracker.Utils;
 using Birthday_tracker.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
@@ -93,6 +94,9 @@ namespace Birthday_tracker.Services
 
             if (dto.ImageFile != null && dto.ImageFile.Length > 0)
             {
+                if (!ImageValidator.IsImage(dto.ImageFile))
+                    throw new Exception("Uploaded file is not a supported image type.");
+
                 var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(dto.ImageFile.FileName);
                 var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", uniqueFileName);
 
@@ -126,6 +130,9 @@ namespace Birthday_tracker.Services
 
             if (dto.ImageFile != null && dto.ImageFile.Length > 0)
             {
+                if (!ImageValidator.IsImage(dto.ImageFile))
+                    throw new Exception("Uploaded file is not a supported image type.");
+
                 var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(dto.ImageFile.FileName);
                 var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", uniqueFileName);
 

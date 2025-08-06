@@ -114,6 +114,12 @@ namespace Birthday_tracker.Controllers
             {
                 Console.WriteLine(ex.ToString());
                 ModelState.AddModelError("", ex.ToString());
+
+                ViewData["BirthdayId"] = birthday.Id;
+                ViewData["BirthdayUserName"] = birthdayDto.Name;
+                ViewData["BirthdayDate"] = birthday.BirthdayDate.ToString("d");
+                ViewData["BirthdayImage"] = birthday.Image;
+
                 return View(birthdayDto);
             }
 
