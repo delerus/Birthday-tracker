@@ -3,7 +3,6 @@ using Birthday_tracker.Models;
 using Birthday_tracker.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace Birthday_tracker.Service
 {
     public class BirthdayService : IBirthdayService
@@ -27,6 +26,12 @@ namespace Birthday_tracker.Service
             if (birthday != null)
             {
                 await _repository.DeleteAsync(birthday);
+
+                if (birthday.Image != "default.jpg")
+                {
+                    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", birthday.Image);
+                    File.Delete(imagePath);
+                }
             }
             else throw new Exception("Data couldn't be found");
 
