@@ -14,5 +14,6 @@ namespace Birthday_tracker.Service
         Task<List<Birthday>> GetAllAsync();
         Task<Birthday?> FindAsync(int id);
         Task AddBirthdayAsync(BirthdayDto dto);
+        Task UpdateBirthdayAsync(Birthday birthday, BirthdayDto dto);
     }
 }

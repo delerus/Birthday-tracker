@@ -2,6 +2,7 @@
 using Birthday_tracker.Models;
 using Birthday_tracker.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace Birthday_tracker.Service
 {
@@ -117,6 +118,47 @@ namespace Birthday_tracker.Service
             };
 
             await _repository.AddAsync(birthday);
+        }
+
+        public async Task UpdateBirthdayAsync(Birthday birthday, BirthdayDto dto)
+        {
+            string imageName = birthday.Image;
+
+            if (dto.ImageFile != null && dto.ImageFile.Length > 0)
+            {
+                var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(dto.ImageFile.FileName);
+                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", uniqueFileName);
+
+                while (System.IO.File.Exists(imagePath))
+                {
+                    uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(dto.ImageFile.FileName);
+                    imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", uniqueFileName);
+                }
+
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    await dto.ImageFile.CopyToAsync(stream);
+                }
+
+                if (birthday.Image != "default.jpg")
+                {
+                    var imageToDeletePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", birthday.Image);
+                    if (File.Exists(imageToDeletePath))
+                        File.Delete(imageToDeletePath);
+                }
+
+                imageName = uniqueFileName;
+            }
+
+            var updatedBirthday = new Birthday
+            {
+                Id = birthday.Id,
+                Name = dto.Name,
+                BirthdayDate = dto.BirthdayDate,
+                Image = imageName
+            };
+
+            await _repository.UpdateAsync(birthday, updatedBirthday);
         }
     }
 }

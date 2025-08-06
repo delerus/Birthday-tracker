@@ -1,0 +1,49 @@
+﻿@model BirthdayDto
+@{
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/birthdayForm.css" />
+    <link rel="stylesheet" href="~/css/home.css" />
+}
+
+
+<form asp-action="Update" asp-controller="Birthday" method="post" enctype="multipart/form-data">
+
+    <h4 class="text-center mb-4">Edit birthday</h4>
+
+    <div class="birthday-cards mb-5">
+        <div class="birthday-card">
+            <img src="~/images/@ViewData["BirthdayImage"]" alt="@ViewData["BirthdayUserName"]" class="avatar mb-1" />
+            <div class="birthday-info">
+                <p class="mb-1">@ViewData["BirthdayUserName"]</p>
+                <p class="mb-1">@ViewData["BirthdayDate"]</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>ID (unchangable auto value)</label>
+        <input class="form-control" value=@ViewData["BirthdayId"] readonly/>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="BirthdayDate"></label>
+        <input asp-for="BirthdayDate" class="form-control" type="date" />
+        <span asp-validation-for="BirthdayDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ImageFile">Upload Image</label>
+        <input asp-for="ImageFile" class="form-control" type="file" accept="image/*" />
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+    </div>
+    <button type="submit">Update</button>
+</form>

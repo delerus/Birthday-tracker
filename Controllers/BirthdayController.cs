@@ -1,6 +1,7 @@
 ﻿using Birthday_tracker.Data;
 using Birthday_tracker.Models;
 using Birthday_tracker.Service;
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
@@ -31,7 +32,7 @@ namespace Birthday_tracker.Controllers
             {
                 Console.WriteLine(ex.ToString());
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -62,15 +63,61 @@ namespace Birthday_tracker.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Edit(int id)
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
         {
-            var birthday = _service.FindAsync(id);
+            var birthday = await _service.FindAsync(id);
+
+            if (birthday == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var birthdayDto = new BirthdayDto
+            {
+                Name = birthday.Name,
+                BirthdayDate = birthday.BirthdayDate,
+            };
+
+            ViewData["BirthdayId"] = birthday.Id;
+            ViewData["BirthdayUserName"] = birthdayDto.Name;
+            ViewData["BirthdayDate"] = birthday.BirthdayDate.ToString("d");
+            ViewData["BirthdayImage"] = birthday.Image;
+
+            return View(birthdayDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, BirthdayDto birthdayDto)
+        {
+            var birthday = await _service.FindAsync(id);
+
             if (birthday == null)
             {
                 return RedirectToAction(nameof(Index));
             }
 
-            return RedirectToAction(nameof(Index));
+            if (!ModelState.IsValid)
+            {
+                ViewData["BirthdayId"] = birthday.Id;
+                ViewData["BirthdayUserName"] = birthdayDto.Name;
+                ViewData["BirthdayDate"] = birthday.BirthdayDate.ToString("d");
+                ViewData["BirthdayImage"] = birthday.Image;
+                return View(birthdayDto);
+            }
+
+            try
+            {
+                await _service.UpdateBirthdayAsync(birthday, birthdayDto);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                ModelState.AddModelError("", ex.ToString());
+                return View(birthdayDto);
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

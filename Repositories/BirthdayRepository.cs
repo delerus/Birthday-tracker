@@ -53,7 +53,6 @@ namespace Birthday_tracker.Repositories
                     result.Add(birthday);
                 }
             }
-
             return result.OrderBy(b => (b.BirthdayDate.Month, b.BirthdayDate.Day)).ToList();
         }
 
@@ -75,6 +74,15 @@ namespace Birthday_tracker.Repositories
         public Task<Birthday?> FindAsync(int id)
         {
             return _context.Birthdays.FirstOrDefaultAsync(b => b.Id == id);
+        }
+
+        public async Task UpdateAsync(Birthday birthday, Birthday updatedBirthday)
+        {
+            birthday.Name = updatedBirthday.Name;
+            birthday.BirthdayDate = updatedBirthday.BirthdayDate;
+            birthday.Image = updatedBirthday.Image;
+
+            await _context.SaveChangesAsync();
         }
     }
 }

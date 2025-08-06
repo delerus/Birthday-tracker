@@ -31,7 +31,7 @@
         <td>@birthday.BirthdayDate.ToShortDateString()</td>
         <td><img src="/images/@birthday.Image" alt="@birthday.Name" /></td>
         <td>
-            <a class="btn btn-primary btn-sm" asp-controller="Birthday" asp-action="Edit" asp-route-id="@birthday.Id">Edit</a>
+            <a class="btn btn-primary btn-sm" asp-controller="Birthday" asp-action="Update" asp-route-id="@birthday.Id">Edit</a>
             <a class="btn btn-danger btn-sm" asp-controller="Birthday" asp-action="Delete" asp-route-id="@birthday.Id">Delete</a>
         </td>
     </tr>

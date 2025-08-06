@@ -8,6 +8,7 @@ namespace Birthday_tracker.Repositories
         Task<List<Birthday>> GetSortedAsync(string field);
         Task<List<Birthday>> GetFilteredByDateAsync(DateTime date1, DateTime date2);
         Task AddAsync(Birthday birthday);
+        Task UpdateAsync(Birthday birthday, Birthday updatedBirthday);
         Task DeleteAsync(Birthday birthday);
         Task<Birthday?> FindAsync(string name, DateTime date);
         Task<Birthday?> FindAsync(int id);
