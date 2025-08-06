@@ -1,5 +1,5 @@
 using Birthday_tracker.Models;
-using Birthday_tracker.Service;
+using Birthday_tracker.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;

@@ -1,6 +1,6 @@
 using Birthday_tracker.Data;
 using Birthday_tracker.Repositories;
-using Birthday_tracker.Service;
+using Birthday_tracker.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

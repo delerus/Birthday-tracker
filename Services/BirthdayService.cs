@@ -4,7 +4,7 @@ using Birthday_tracker.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 
-namespace Birthday_tracker.Service
+namespace Birthday_tracker.Services
 {
     public class BirthdayService : IBirthdayService
     {

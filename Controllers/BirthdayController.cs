@@ -1,6 +1,6 @@
 ﻿using Birthday_tracker.Data;
 using Birthday_tracker.Models;
-using Birthday_tracker.Service;
+using Birthday_tracker.Services;
 using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;

@@ -1,6 +1,6 @@
 ﻿using Birthday_tracker.Models;
 
-namespace Birthday_tracker.Service
+namespace Birthday_tracker.Services
 {
     public interface IBirthdayService
     {
